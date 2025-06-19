@@ -1,33 +1,53 @@
-const { StatusCodes } = require('http-status-codes')
 const NotImplementedError = require('../errors/notImplemented.error')
-const BadRequest = require('../errors/badRequest.error')
+const { ProblemService } = require('../services')
+const { ProblemRepository } = require("../repositories");
+const { StatusCodes } = require('http-status-codes');
+
+const problemService = new ProblemService(new ProblemRepository());
 
 function pingProblemController(req, res) {
   return res.json({ message: 'problem controller up' })
 }
 
-function addProblem(req, res, next) {
+async function addProblem(req, res, next) {
   try {
-    // not implemented 
-    throw new NotImplementedError('addProblem')
+    const newproblem = await problemService.createProblem(req.body);
+
+    return res.status(StatusCodes.CREATED).json({
+      success: true,
+      message: "Problem added successfully",
+      error: {},
+      data: newproblem
+    })
   } catch (error) {
     next(error)
   }
 }
 
-function getProblem(req, res, next) {
+async function getProblem(req, res, next) {
   try {
-    // not implemented 
-    throw new NotImplementedError('addProblem')
+    const problem = await problemService.getProblem(req.params.id);
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Problem fetched succedssfully",
+      error: {},
+      data: problem
+
+    })
   } catch (error) {
     next(error)
   }
 }
 
-function getProblems(req, res) {
+async function getProblems(req, res) {
   try {
-    // not implemented 
-    throw new NotImplementedError('addProblem')
+    const data = await problemService.getAllProblems();
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "All problems fetched succedssfully",
+      error: {},
+      data: data
+    })
   } catch (error) {
     next(error)
   }
