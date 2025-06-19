@@ -5,13 +5,14 @@ class ProblemService {
     this.problemRepository = problemRepository;
   }
   async createProblem(problemData) {
-    try {
-      problemData.description = sanitizeMarkdownContent(problemData.description);
-      const problem = await this.problemRepository.createProblem(problemData);
-    } catch (err) {
-      console.log(err);
-      throw err;
-    }
+    problemData.description = sanitizeMarkdownContent(problemData.description);
+    const problem = await this.problemRepository.createProblem(problemData);
+    return problem;
+  }
+
+  async getAllProblems() {
+    const problems = await this.problemRepository.getAllProblems();
+    return problems;
   }
 }
 
