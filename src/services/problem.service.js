@@ -1,4 +1,4 @@
-const sanitizeMarkdownContent = require("../utils/markdownSanitizer");
+const sanitizeMarkdownContent = require
 
 class ProblemService {
   constructor(problemRepository) {
@@ -13,6 +13,11 @@ class ProblemService {
   async getAllProblems() {
     const problems = await this.problemRepository.getAllProblems();
     return problems;
+  }
+
+  async getProblem(problemID) {
+    const problem = await this.problemRepository.getProblem(problemID);
+    return problem;
   }
 }
 
