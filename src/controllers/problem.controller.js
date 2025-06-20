@@ -70,10 +70,18 @@ async function deleteProblem(req, res) {
 }
 
 
-function updateProblem(req, res) {
+async function updateProblem(req, res) {
   try {
-    // not implemented 
-    throw new NotImplementedError('addProblem')
+    // const {title, description, difficulty,testcases,editorial }= req.body;
+    const updateData = req.body;
+    const options = { new: true };
+    const problem = await problemService.updateProblem(req.params.id, updateData, options);
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Problem updated succedssfully",
+      error: {},
+      data: problem
+    })
   } catch (error) {
     next(error)
   }
