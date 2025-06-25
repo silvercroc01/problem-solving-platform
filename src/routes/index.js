@@ -1,4 +1,3 @@
-
 const express = require('express');
 
 const v1Router = require('./v1')
